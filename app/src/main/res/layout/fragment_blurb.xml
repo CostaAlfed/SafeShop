@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:background="@drawable/royal_blue_bg"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/qty_text"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/gradient_bg_3"
+        android:textColor="@color/butt_text"
+        android:ems="10"
+        android:text="@string/blurb_title"
+        android:textSize="28sp"
+        android:gravity="center" />
+<ImageView
+    android:id="@+id/Book_Photo_Blurb"
+    android:layout_width="125dp"
+    android:layout_height="125dp"
+    android:layout_marginTop="5dp"
+    android:layout_marginBottom="5dp"
+    android:layout_gravity="center"
+    android:src="@drawable/app_icon_v2_192x192"
+    >
+</ImageView>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="66dp"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:text="@string/blurb_book_title"
+            android:textSize="24sp"
+            android:textColor="@color/butt_text"
+            android:gravity="center"
+            />
+        <TextView
+            android:id="@+id/Book_Title_blurb"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="BOOK TITLE"
+            android:textSize="22sp"
+            android:textColor="@color/cardview_light_background"
+            android:textStyle="bold"
+            android:gravity="center"
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="66dp"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:text="@string/author"
+            android:textSize="24sp"
+            android:textColor="@color/butt_text"
+            android:gravity="center"
+            />
+        <TextView
+            android:id="@+id/Book_Author_blurb"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="AUTHOR FULL NAME"
+            android:textSize="24sp"
+            android:textColor="@color/cardview_light_background"
+            android:textStyle="bold"
+            android:gravity="center"
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:text="@string/summary"
+            android:textSize="22sp"
+            android:textColor="@color/butt_text"
+            android:gravity="center"
+            />
+        <TextView
+            android:id="@+id/Book_Summary"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="SynopsisSynopsisSynopsisSynopsisSynopsisSynopsisSynopsisSynopsisSynopsisSynopsisSynopsisSynopsisSynopsisSynopsisSynopsisSynopsisSynopsisSynopsisSynopsisSynopsisSynopsisSynopsisSynopsisSynopsisSynopsis"
+            android:textSize="18sp"
+            android:textColor="@color/cardview_light_background"
+            android:padding="10dp"
+
+            />
+    </LinearLayout>
+    <Button
+        android:id="@+id/ok_butt_blurb"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:background="@drawable/custom_butt_3"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="10dp"
+        android:text="@string/ok"
+        android:textSize="22sp"
+        android:textColor="@color/text_dark_blue"
+        android:elevation="20dp"
+
+
+        />
+
+</LinearLayout>

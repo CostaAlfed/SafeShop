@@ -1,0 +1,13 @@
+<TextView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="30sp"
+        android:textColor="@color/text_dark_blue"
+        android:background="#2D85B3FF"
+    android:elevation="20dp"
+        android:paddingLeft="30dp"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp"
+        android:text="Category Name" />
