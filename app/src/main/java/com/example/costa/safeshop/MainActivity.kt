@@ -26,6 +26,9 @@ import android.icu.lang.UCharacter.GraphemeClusterBreak.T
 import java.util.*
 
 
+
+
+
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,14 +36,18 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         var logpass = login_password.text.toString()
-        System.out.println("logpass= "+logpass)
+        System.out.println("--logpass= "+logpass)
         val plaintext: ByteArray = logpass.toByteArray()
-        System.out.println("plaintext= "+plaintext)
+        System.out.println("--plaintext= "+plaintext)
         val keygen = KeyGenerator.getInstance("AES")
         keygen.init(256)
         val key: SecretKey = keygen.generateKey()
-        val encodedKey = getEncoder().encodeToString(key.encoded)
-        System.out.println("encodedKey= "+encodedKey)
+        System.out.println("--key= "+key)
+        val bytekey = key.encoded
+        System.out.println("--bytekey= "+bytekey)
+        val StringKey = String(bytekey, Charsets.UTF_8)
+        System.out.println("--StringKey= "+StringKey)
+        println("--StringKey_typecheck"+"${StringKey::class.simpleName}"+"___expected: String")
 
     signin_butt.setOnClickListener {
         var ipad:String=getString(R.string.local_ip)
@@ -49,11 +56,11 @@ class MainActivity : AppCompatActivity() {
         val cipher = Cipher.getInstance("AES/CBC/PKCS5PADDING")
         cipher.init(Cipher.ENCRYPT_MODE, key)
         val ciphertext: ByteArray = cipher.doFinal(plaintext)
-        System.out.println("ciphertext= "+ciphertext)
+        System.out.println("--ciphertext= "+ciphertext)
         val iv: ByteArray = cipher.iv
-        System.out.println("iv= "+iv)
-        val logpassencripted = String(ciphertext)
-        System.out.println("logpassencripted= "+logpassencripted)
+        System.out.println("--iv= "+iv)
+        val logpassencripted = String(ciphertext, Charsets.UTF_8)
+        System.out.println("--logpassencripted= "+logpassencripted)
 
         //-----------------------------------------------------------------
         //var url =
@@ -90,8 +97,9 @@ class MainActivity : AppCompatActivity() {
 
         signup_butt.setOnClickListener{
             var i=Intent(this,RegAct::class.java)
-            intent.putExtra("AES key",encodedKey)
-            System.out.println("AES key= "+encodedKey)
+
+            intent.putExtra("secretkey",StringKey)
+            System.out.println("--AES key (StringKey sent in mainact to regact) = "+StringKey)
             startActivity(i)
         }
 

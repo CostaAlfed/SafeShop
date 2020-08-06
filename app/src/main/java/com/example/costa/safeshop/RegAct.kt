@@ -27,21 +27,25 @@ class RegAct : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_reg)
 
-        val encodedKey2=intent.getStringExtra("AES key")
-        System.out.println("encodedKey2= "+encodedKey2)
-        val signpass= reg_password.text.toString()
-        System.out.println("signpass= "+signpass)
-        val plaintext: ByteArray = signpass.toByteArray()
-        System.out.println("plaintext= "+plaintext)
-        val decodedKey = getDecoder().decode(encodedKey2)
-        System.out.println("decodedKey= "+decodedKey)
+        //var bundle :Bundle ?=intent.extras
+        //var StringKey2 = bundle!!.getString("secretkey") // 1
+
+        var StringKey2=getIntent().getStringExtra("secretkey") //?: "" //remove the ?: ""
+        System.out.println("--StringKey2= "+StringKey2)
+
+        val byteKey2 = getDecoder().decode(StringKey2)
+        System.out.println("--byteKey2= "+byteKey2)
         // rebuild key using SecretKeySpec
-        val originalKey = SecretKeySpec(decodedKey, 0, decodedKey.size, "AES")
-        System.out.println("originalKey= "+originalKey)
+        val originalSecretKey = SecretKeySpec(byteKey2, 0, byteKey2.size, "AES")
+        System.out.println("--originalSecretKey= "+originalSecretKey)
 
         reg_butt.setOnClickListener{
+            val signpass= reg_password.text.toString()
+            System.out.println("--signpass= "+signpass)
+            val plaintext: ByteArray = signpass.toByteArray()
+            System.out.println("--plaintext= "+plaintext)
             val cipher = Cipher.getInstance("AES/CBC/PKCS5PADDING")
-            cipher.init(Cipher.ENCRYPT_MODE, originalKey)
+            cipher.init(Cipher.ENCRYPT_MODE, originalSecretKey)
             val ciphertext: ByteArray = cipher.doFinal(plaintext)
             val iv: ByteArray = cipher.iv
             val logpassencripted = String(ciphertext)
