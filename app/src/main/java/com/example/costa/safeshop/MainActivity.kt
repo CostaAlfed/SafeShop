@@ -23,10 +23,9 @@ import java.util.Base64.getEncoder
 import androidx.core.app.ComponentActivity.ExtraData
 import androidx.core.content.ContextCompat.getSystemService
 import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+import io.card.payment.i18n.StringKey
 import java.util.*
-
-
-
+import javax.crypto.spec.SecretKeySpec
 
 
 class MainActivity : AppCompatActivity() {
@@ -35,26 +34,46 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+
+
+        /*
         var logpass = login_password.text.toString()
-        System.out.println("--logpass= "+logpass)
+        //System.out.println("--logpass= "+logpass)
         val plaintext: ByteArray = logpass.toByteArray()
-        System.out.println("--plaintext= "+plaintext)
+        //System.out.println("--plaintext= "+plaintext)
         val keygen = KeyGenerator.getInstance("AES")
         keygen.init(256)
         val key: SecretKey = keygen.generateKey()
-        System.out.println("--key= "+key)
+        //System.out.println("--key= "+key)
         val bytekey = key.encoded
-        System.out.println("--bytekey= "+bytekey)
+        //System.out.println("--bytekey= "+bytekey)
         val StringKey = String(bytekey, Charsets.UTF_8)
-        System.out.println("--StringKey= "+StringKey)
-        println("--StringKey_typecheck"+"${StringKey::class.simpleName}"+"___expected: String")
+        //System.out.println("--StringKey= "+StringKey)
+        println("--StringKey_typecheck"+"${StringKey::class.simpleName}"+"___expected: String")*/
 
     signin_butt.setOnClickListener {
+        var StringKeyEq:String=""
         var ipad:String=getString(R.string.local_ip)
-        //--------------------------ENCRYPTION-----------------------------
+        var urlh =
+            "http://"+ipad+"/SalesWeb/get_strkey.php?number=" + login_number.text.toString()
+        var rqh: RequestQueue = Volley.newRequestQueue(this)
+        var srh= StringRequest(Request.Method.GET,urlh, Response.Listener { response ->
+            StringKeyEq=response
+        }, Response.ErrorListener { error ->
+            Toast.makeText(this,error.message, Toast.LENGTH_LONG).show()
+        })
+        rqh.add(srh)
 
+        val ByteKeyEq = Base64.getDecoder().decode(StringKeyEq)
+        System.out.println("--byteKeyEq= "+ByteKeyEq)
+        val originalKey = SecretKeySpec(ByteKeyEq, 0, ByteKeyEq.size, "AES")
+        System.out.println("--originalKey= "+originalKey)
+
+
+        //--------------------------ENCRYPTION-----------------------------
+        val plaintext: ByteArray = login_password.text.toString().toByteArray()
         val cipher = Cipher.getInstance("AES/CBC/PKCS5PADDING")
-        cipher.init(Cipher.ENCRYPT_MODE, key)
+        cipher.init(Cipher.ENCRYPT_MODE, originalKey)
         val ciphertext: ByteArray = cipher.doFinal(plaintext)
         System.out.println("--ciphertext= "+ciphertext)
         val iv: ByteArray = cipher.iv
@@ -97,9 +116,8 @@ class MainActivity : AppCompatActivity() {
 
         signup_butt.setOnClickListener{
             var i=Intent(this,RegAct::class.java)
-
-            intent.putExtra("secretkey",StringKey)
-            System.out.println("--AES key (StringKey sent in mainact to regact) = "+StringKey)
+            //intent.putExtra("secretkey",StringKey)
+            //System.out.println("--AES key (StringKey sent in mainact to regact) = "+StringKey)
             startActivity(i)
         }
 
