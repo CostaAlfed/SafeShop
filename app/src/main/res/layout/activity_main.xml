@@ -30,7 +30,7 @@
             android:ems="10"
             android:hint="@string/enter_mobile_number"
             android:inputType="phone"
-            android:text="0555123456"
+            android:text="0123"
             android:textColor="@color/butt_text"
             android:textColorHint="@color/butt_text" />
 
@@ -60,7 +60,7 @@
             android:ems="10"
             android:hint="@string/enter_password"
             android:inputType="textPassword"
-            android:text="55555"
+            android:text="12345"
             android:textColor="@color/butt_text"
             android:textColorHint="@color/butt_text" />
     </com.google.android.material.textfield.TextInputLayout>
