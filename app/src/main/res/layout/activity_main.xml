@@ -30,7 +30,7 @@
             android:ems="10"
             android:hint="@string/enter_mobile_number"
             android:inputType="phone"
-            android:text="0123"
+            android:text="0791192226"
             android:textColor="@color/butt_text"
             android:textColorHint="@color/butt_text" />
 
@@ -60,7 +60,7 @@
             android:ems="10"
             android:hint="@string/enter_password"
             android:inputType="textPassword"
-            android:text="12345"
+            android:text="911911"
             android:textColor="@color/butt_text"
             android:textColorHint="@color/butt_text" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -69,6 +69,23 @@
 
     <TextView
         android:id="@+id/signin_butt"
+        android:layout_width="250dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="80dp"
+        android:layout_marginTop="40dp"
+        android:background="@drawable/gradient_butt"
+        android:elevation="10dp"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="@string/sign_in"
+        android:textColor="@color/butt_text"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout2" />
+
+    <TextView
+        android:id="@+id/signin_butt2"
         android:layout_width="250dp"
         android:layout_height="60dp"
         android:layout_marginStart="80dp"
@@ -180,6 +197,21 @@
             app:srcCompat="@drawable/linkedin" />
     </LinearLayout>
 
+    <Button
+        android:id="@+id/get_salt_butt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="GetSalt"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/signup_butt" />
+
+    <Button
+        android:id="@+id/get_hash_butt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="GetHash"
+        app:layout_constraintEnd_toStartOf="@+id/get_salt_butt"
+        app:layout_constraintTop_toBottomOf="@+id/signup_butt" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
