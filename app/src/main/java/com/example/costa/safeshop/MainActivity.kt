@@ -27,9 +27,9 @@ import androidx.core.content.ContextCompat.getSystemService
 import android.icu.lang.UCharacter.GraphemeClusterBreak.T
 
 
-class MainActivity : AppCompatActivity() {
-    var saltstr: String =""
-    @Throws(NoSuchAlgorithmException::class, InvalidKeySpecException::class)
+public class MainActivity : AppCompatActivity() {
+
+   /* @Throws(NoSuchAlgorithmException::class, InvalidKeySpecException::class)
     fun getEncryptedPassword(password: String, salt: ByteArray): ByteArray {
         val spec = PBEKeySpec(password.toCharArray(), salt, 20000, 160)
         val f = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1")
@@ -39,16 +39,18 @@ class MainActivity : AppCompatActivity() {
     @Throws(NoSuchAlgorithmException::class, InvalidKeySpecException::class)
     fun authenticate(attemptedPassword: String, encryptedPassword: ByteArray, salt: ByteArray): Boolean {
         // Encrypt the clear-text password using the same salt that was used to encrypt the original password
-        val encryptedAttemptedPassword = getEncryptedPassword(attemptedPassword, salt)
+        val encryptedAttemptedPassword = RegAct.getEncryptedPassword(attemptedPassword, salt)
+
 
         // Authentication succeeds if encrypted password that the user entered is equal to the stored hash
         return Arrays.equals(encryptedPassword, encryptedAttemptedPassword)
-    }
+    }*/
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        var saltstr: String =""
         val ipad: String = getString(R.string.local_ip)
         var pwhashstr: String = ""
 
@@ -63,7 +65,7 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(this, error.message, Toast.LENGTH_LONG).show()
             })
             rq3.add(sr3)
-            System.out.println(" --saltstr outside volley= " + saltstr)
+            System.out.println(" --saltstr: SALT from db outside volley = " + saltstr)
             System.out.println("--")
         }
 
@@ -77,29 +79,30 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(this, error.message, Toast.LENGTH_LONG).show()
             })
             rqh.add(srh)
-            System.out.println(" --pwhashstr outside volley= " + pwhashstr)
+            System.out.println(" --pwhashstr: HASH from db outside volley= " + pwhashstr)
             System.out.println("--")
 
         }
 
         signin_butt.setOnClickListener {
-            //converting pwhashstr and saltstr2 back to BYTE ARRAY
-            val pwhash = pwhashstr.toByteArray()
-            System.out.println(" --pwhash= " + Arrays.toString(pwhash))
-            val salt = saltstr.toByteArray()
-            System.out.println(" --salt= " + Arrays.toString(salt))
+            //converting pwhashstr and saltstr back to BYTE ARRAY
+            //val pwhash = pwhashstr.toByteArray(Charsets.UTF_8)
+            val pwhash = Base64.getDecoder().decode(pwhashstr)
+            //System.out.println(" --pwhash: HASH from db IN BYTES right before AUTH - Array.toString= " + Arrays.toString(pwhash))
+            //System.out.println(" --pwhash: HASH from db IN BYTES right before AUTH - String()= " + String(pwhash, Charsets.UTF_8))
+            System.out.println(" --salt: SALT from db IN BYTES right before AUTH new= " + Base64.getEncoder().encodeToString(pwhash))
 
-            if (authenticate(login_password.text.toString(), pwhash, salt).equals(false)) {
+            //val salt = saltstr.toByteArray(Charsets.UTF_8)
+            val salt = Base64.getDecoder().decode(saltstr)
+            //System.out.println(" --salt: SALT from db IN BYTES right before AUTH= " + Arrays.toString(salt))
+            //System.out.println(" --salt: SALT from db IN BYTES right before AUTH= " + String(salt, Charsets.UTF_8))
+            System.out.println(" --salt: SALT from db IN BYTES right before AUTH new= " + Base64.getEncoder().encodeToString(salt))
+
+            if (RegAct.authenticate(login_password.text.toString(), pwhash, salt).equals(false)) {
                 System.out.println(" --authenticate= false")
-                System.out.println(" --loginpassword@auth= "+login_password.text.toString())
-                System.out.println(" --pwhash@auth= "+Arrays.toString(pwhash))
-                System.out.println(" --salt@auth= "+Arrays.toString(salt))
                 Toast.makeText(this, "Sign In Failed", Toast.LENGTH_LONG).show()
             } else {
                 System.out.println(" --authenticate= true")
-                System.out.println(" --loginpassword= "+login_password.text.toString())
-                System.out.println(" --pwhash= "+pwhash)
-                System.out.println(" --salt= "+salt)
                 UserInfo.mobile = login_number.text.toString()
                 val i0 = Intent(this, HomeAct::class.java)
                 var uname=""//DELETE THISSSSSS DELETE THISSSSSS DELETE THISSSSSSS DELETE THISSSSSS
@@ -113,8 +116,6 @@ class MainActivity : AppCompatActivity() {
         }
             signup_butt.setOnClickListener {
                 val i = Intent(this, RegAct::class.java)
-                //intent.putExtra("secretkey",StringKey)
-                //System.out.println("--AES key (StringKey sent in mainact to regact) = "+StringKey)
                 startActivity(i)
             }
 

@@ -1,6 +1,7 @@
 package com.example.costa.safeshop
 
 
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -17,6 +18,7 @@ import java.util.Base64.getDecoder
 import androidx.core.app.ComponentActivity.ExtraData
 import androidx.core.content.ContextCompat.getSystemService
 import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+import android.net.ConnectivityManager
 import androidx.core.text.isDigitsOnly
 import java.nio.charset.Charset
 import java.util.*
@@ -38,11 +40,11 @@ import javax.crypto.spec.PBEKeySpec;
 class RegAct : AppCompatActivity() {
 
 
-
+    companion object {
         @Throws(NoSuchAlgorithmException::class, InvalidKeySpecException::class)
         fun getEncryptedPassword(password: String, salt: ByteArray): ByteArray {
-
-            val derivedKeyLength = 160 // SHA-1 generates 160 bit hashes, so that's what makes sense here
+            val derivedKeyLength =
+                160 // SHA-1 generates 160 bit hashes, so that's what makes sense here
 
             val iterations = 20000 // Pick an iteration count that works for you.
             //The NIST recommends at least 1,000 iterations: http://csrc.nist.gov/publications/nistpubs/800-132/nist-sp800-132.pdf
@@ -68,27 +70,44 @@ class RegAct : AppCompatActivity() {
             return salt
         }
 
+        @Throws(NoSuchAlgorithmException::class, InvalidKeySpecException::class)
+        fun authenticate(attemptedPassword: String, encryptedPassword: ByteArray, salt: ByteArray): Boolean {
+            // Encrypt the clear-text password using the same salt that was used to encrypt the original password
+            val encryptedAttemptedPassword = getEncryptedPassword(attemptedPassword, salt)
+            System.out.println(" --encryptedAttemptedPassword: Attempted PASS HASHED by AUTH= " + Base64.getEncoder().encodeToString(encryptedAttemptedPassword))
+
+            // Authentication succeeds if encrypted password that the user entered is equal to the stored hash
+            return Arrays.equals(encryptedPassword, encryptedAttemptedPassword)
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_reg)
 
          reg_butt.setOnClickListener{
              var saltbae=generateSalt()
-             System.out.println("--saltbae= "+Arrays.toString(saltbae))
-             var saltbaestr = String(saltbae, Charset.forName("UTF-8"))
+             //System.out.println("--saltbae= "+String(saltbae, Charsets.UTF_8))
+             System.out.println("--saltbae= "+Base64.getEncoder().encodeToString(saltbae))
+
+             var saltbaestr = Base64.getEncoder().encodeToString(saltbae)
              System.out.println("--saltbaestr= "+saltbaestr)
+
              var encpass=getEncryptedPassword(reg_password.text.toString(),saltbae)
-             System.out.println("--encpass= "+Arrays.toString(encpass))
-             var encpassstr=Arrays.toString(encpass)
+             //System.out.println("--encpass= "+String(encpass, Charsets.UTF_8))
+             System.out.println("--encpass= "+Base64.getEncoder().encodeToString(encpass))
+
+             var encpassstr=Base64.getEncoder().encodeToString(encpass)
              System.out.println("--encpassstr= "+encpassstr)
-            if ((!reg_number.text.toString().isDigitsOnly()) || reg_number.text.toString().length!=10 )
+
+             if ((!reg_number.text.toString().isDigitsOnly()) || reg_number.text.toString().length!=10 )
                 Toast.makeText(this, "Invalid Phone Number", Toast.LENGTH_LONG).show()
-            else {
-                if (reg_password.text.toString().equals(password_confirm.text.toString())) {
-                    val ipad:String=getString(R.string.local_ip)
-                    val url =
+             else {
+                 if (reg_password.text.toString().equals(password_confirm.text.toString())) {
+                     val ipad:String=getString(R.string.local_ip)
+                     val url =
                         "http://"+ipad+"/SalesWeb/add_user.php?number=" + reg_number.text.toString() + "&pwhash=" +
-                                encpassstr +"&salt="+Arrays.toString(saltbae)+ "&name=" + reg_name.text.toString() +
+                                encpassstr +"&salt="+saltbaestr+ "&name=" + reg_name.text.toString() +
                                 "&address=" + reg_address.text.toString()
                     val rq:RequestQueue=Volley.newRequestQueue(this)
                     val sr=StringRequest(Request.Method.GET,url,Response.Listener { response ->
