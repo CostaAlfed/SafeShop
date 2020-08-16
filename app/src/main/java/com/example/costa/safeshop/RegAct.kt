@@ -87,14 +87,12 @@ class RegAct : AppCompatActivity() {
 
          reg_butt.setOnClickListener{
              var saltbae=generateSalt()
-             //System.out.println("--saltbae= "+String(saltbae, Charsets.UTF_8))
              System.out.println("--saltbae= "+Base64.getEncoder().encodeToString(saltbae))
 
              var saltbaestr = Base64.getEncoder().encodeToString(saltbae)
              System.out.println("--saltbaestr= "+saltbaestr)
 
              var encpass=getEncryptedPassword(reg_password.text.toString(),saltbae)
-             //System.out.println("--encpass= "+String(encpass, Charsets.UTF_8))
              System.out.println("--encpass= "+Base64.getEncoder().encodeToString(encpass))
 
              var encpassstr=Base64.getEncoder().encodeToString(encpass)
