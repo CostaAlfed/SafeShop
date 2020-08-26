@@ -3,6 +3,8 @@ package com.example.costa.safeshop
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import com.android.volley.Request
@@ -17,6 +19,8 @@ class HomeAct : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
+        getSupportActionBar()?.setDisplayHomeAsUpEnabled(true)// make the application icon clickable to add back button
+
         var ipad:String=getString(R.string.local_ip)
         var url="http://"+ipad+"/SalesWeb/get_cat.php"
         var list=ArrayList<String>()
@@ -36,5 +40,15 @@ class HomeAct : AppCompatActivity() {
         obj.putExtra("cat",cat)
         startActivity(obj)
     }
+    }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.getItemId()) {
+            android.R.id.home -> {finish()
+                return true}}
+        return super.onOptionsItemSelected(item)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        return true
     }
 }

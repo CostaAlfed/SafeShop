@@ -15,6 +15,7 @@ import com.android.volley.RequestQueue
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
+import kotlinx.android.synthetic.main.fragment_qty.*
 
 class QtyFragment : DialogFragment() {
 
@@ -26,12 +27,13 @@ class QtyFragment : DialogFragment() {
         var butt=v.findViewById<Button>(R.id.qty_butt)
 
         butt.setOnClickListener{
-
+            if (qty_text.text.toString().equals("0"))
+                Toast.makeText(activity,"Quantity Cannot be Equal to 0..",Toast.LENGTH_LONG).show()
+            else{
             var ipad:String=getString(R.string.local_ip)
             var url="http://"+ipad+"/SalesWeb/add_temp.php?number="+UserInfo.mobile+"&bookid="+UserInfo.bookId+"&qty="+et.text.toString()
             var rq:RequestQueue=Volley.newRequestQueue(activity)
             var sr=StringRequest(Request.Method.GET,url,Response.Listener { response ->
-                //Toast.makeText(activity,"normalement this takes u to Order list",Toast.LENGTH_LONG).show()
                 var i2=Intent(activity,OrderAct::class.java)
                 startActivity(i2)
 
@@ -40,10 +42,8 @@ class QtyFragment : DialogFragment() {
             })
 
             rq.add(sr)
+            }
         }
-
         return v
     }
-
-
 }

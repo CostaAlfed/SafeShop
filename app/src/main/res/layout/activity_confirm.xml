@@ -14,7 +14,8 @@
         android:layout_marginLeft="40dp"
         android:layout_marginTop="108dp"
         android:textColor="@color/text_1"
-        android:text="Thank You For Using Our Service!"
+        android:text="Thank You For Using Our Service! \n \n Your order will be delivered within:\n 5 - 7 days"
+        android:gravity="center"
         android:textSize="22sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

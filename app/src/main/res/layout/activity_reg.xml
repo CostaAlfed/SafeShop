@@ -6,11 +6,13 @@
     android:layout_height="match_parent"
     android:background="@drawable/royal_blue_bg"
     android:orientation="vertical"
+    android:focusable="true"
     tools:context=".RegAct">
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:textColorHint="@color/butt_text"
         >
     <EditText
@@ -18,6 +20,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/enter_mobile_number"
+        android:text="0791192228"
         android:textColor="@color/butt_text"
         android:textColorHint="@color/butt_text"
         android:drawableEnd="@drawable/ic_number_blue_2"
@@ -37,6 +40,7 @@
         android:id="@+id/reg_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:text="0791192228"
         android:textColor="@color/butt_text"
         android:textColorHint="@color/butt_text"
         android:drawableEnd="@drawable/ic_pass_blue_2"
@@ -57,6 +61,7 @@
         android:id="@+id/password_confirm"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:text="0791192228"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginTop="15dp"
@@ -77,6 +82,7 @@
         android:id="@+id/reg_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:text="any name"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginTop="15dp"
@@ -104,10 +110,32 @@
         android:drawableEnd="@drawable/ic_address_blue"
         android:ems="10"
         android:hint="@string/enter_address"
+        android:text="any adress"
         android:inputType="text"
         android:textColor="@color/butt_text"
         android:textColorHint="@color/butt_text" />
     </com.google.android.material.textfield.TextInputLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:orientation="horizontal"
+        android:gravity="center"
+        >
+
+        <CheckBox
+            android:id="@+id/captcha_checkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:text="@string/im_not_a_robot"
+            android:textSize="30sp"
+            android:textColor="@color/butt_text"/>
+        <ImageView
+            android:layout_height="100dp"
+            android:layout_width="100dp"
+            android:src="@drawable/recaptcha"/>
+    </LinearLayout>
     <TextView
         android:id="@+id/reg_butt"
         android:layout_width="match_parent"

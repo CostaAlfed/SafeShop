@@ -10,12 +10,17 @@ import com.android.volley.Response
 import com.android.volley.toolbox.JsonArrayRequest
 import com.android.volley.toolbox.Volley
 import kotlinx.android.synthetic.main.activity_books.*
+import android.view.Menu
+import android.view.MenuItem
+
 
 class BooksAct : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_books)
+        getSupportActionBar()?.setDisplayHomeAsUpEnabled(true)// make the application icon clickable to add back button
 
         var cat:String=intent.getStringExtra("cat")
         var ipad:String=getString(R.string.local_ip)
@@ -41,5 +46,15 @@ class BooksAct : AppCompatActivity() {
         })
         rq.add(jar)
 
+    }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.getItemId()) {
+            android.R.id.home -> {finish()
+                return true}}
+        return super.onOptionsItemSelected(item)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        return true
     }
 }
