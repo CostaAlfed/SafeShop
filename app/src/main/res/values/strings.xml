@@ -33,4 +33,6 @@
     <string name="summary">Summary:</string>
     <string name="ok">OK</string>
     <string name="im_not_a_robot">I am not a robot.</string>
+    <string name="qr">GoodReads \n QR Code</string>
+    <string name="enter_quantity">   Please enter the quantity to order:   </string>
 </resources>

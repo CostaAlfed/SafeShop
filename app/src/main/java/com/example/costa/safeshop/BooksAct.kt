@@ -22,6 +22,10 @@ class BooksAct : AppCompatActivity() {
         setContentView(R.layout.activity_books)
         getSupportActionBar()?.setDisplayHomeAsUpEnabled(true)// make the application icon clickable to add back button
 
+        Toast.makeText(this,
+            "   Click on the cover image \nfor more details about the book!",Toast.LENGTH_LONG)
+            .show()
+
         var cat:String=intent.getStringExtra("cat")
         var ipad:String=getString(R.string.local_ip)
         var url="http://"+ipad+"/SalesWeb/get_books.php?category="+cat

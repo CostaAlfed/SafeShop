@@ -2,7 +2,6 @@ package com.example.costa.safeshop
 
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -12,14 +11,7 @@ import com.android.volley.RequestQueue
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_reg.*
-import javax.crypto.Cipher
-import java.util.Base64.getDecoder
-import androidx.core.app.ComponentActivity.ExtraData
-import androidx.core.content.ContextCompat.getSystemService
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
-import android.net.ConnectivityManager
 import android.os.AsyncTask
 import android.util.Log
 import android.view.Menu
@@ -28,28 +20,18 @@ import androidx.core.text.isDigitsOnly
 import com.galleonsoft.safetynetrecaptcha.ApiPostHelper
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.common.api.CommonStatusCodes
-import com.google.android.gms.common.api.GoogleApiClient
-import com.google.android.gms.common.api.ResultCallback
 import com.google.android.gms.safetynet.SafetyNet
-import com.google.android.gms.safetynet.SafetyNetApi
 import org.json.JSONException
 import org.json.JSONObject
-import java.nio.charset.Charset
 import java.util.*
-import javax.crypto.KeyGenerator
-import javax.crypto.SecretKey
-import javax.crypto.spec.SecretKeySpec
-import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
-import java.security.spec.InvalidKeySpecException;
-import java.security.spec.KeySpec;
-import java.util.Arrays;
+import java.security.NoSuchAlgorithmException
+import java.security.SecureRandom
+import java.security.spec.InvalidKeySpecException
+import java.util.Arrays
 import java.util.regex.Matcher
 import java.util.regex.Pattern
-
-import javax.crypto.SecretKeyFactory;
-import javax.crypto.spec.PBEKeySpec;
-
+import javax.crypto.SecretKeyFactory
+import javax.crypto.spec.PBEKeySpec
 
 
 

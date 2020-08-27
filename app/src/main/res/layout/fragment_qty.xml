@@ -6,7 +6,15 @@
     android:orientation="vertical"
     tools:context=".QtyFragment">
 
-
+    <TextView
+        android:id="@+id/qty_title"
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:background="#DAD9D9"
+        android:textSize="20sp"
+        android:textColor="@color/text_dark_blue"
+        android:layout_height="50dp"
+        android:text="@string/enter_quantity" />
     <EditText
         android:id="@+id/qty_text"
         android:layout_width="match_parent"
