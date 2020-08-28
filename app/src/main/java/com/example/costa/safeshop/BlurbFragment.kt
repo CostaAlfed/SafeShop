@@ -104,7 +104,7 @@ class BlurbFragment : DialogFragment() {
 
     private fun saveImage(bitmap:Bitmap): String {
         // Create Destination folder in external storage. This will require EXTERNAL STORAGE permission
-        val imgDir:String  = Environment.getExternalStorageDirectory().toString() + "/"
+        val imgDir:String  = Environment.getExternalStorageDirectory().toString() + "/DzBookStore"
         // Generate a random file name for image
         val imageName:String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date()) + ".jpeg"
         val localFile= File(imgDir, imageName)

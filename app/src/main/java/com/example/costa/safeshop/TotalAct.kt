@@ -35,9 +35,10 @@ class TotalAct : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_total)
 
+        val bnb2=intent.getStringExtra("bnb")
         var total:Int=0
         var ipad:String=getString(R.string.local_ip)
-        var url="http://"+ipad+"/SalesWeb/get_total.php?bill_no="+ intent.getStringExtra("bnb")
+        var url="http://"+ipad+"/SalesWeb/get_total.php?bill_no="+ bnb2
         var rq: RequestQueue = Volley.newRequestQueue(this)
         var sr= StringRequest(Request.Method.GET,url, Response.Listener { response ->
             total=response.toInt()
@@ -105,13 +106,25 @@ class TotalAct : AppCompatActivity() {
         startService(i)
 
         paypal_butt.setOnClickListener {
-            amount=total_eur.text.toString().toDouble()
+            /*amount=total_eur.text.toString().toDouble()
             var payment=PayPalPayment(BigDecimal.valueOf(amount),"EUR","DzBookStore", PayPalPayment.PAYMENT_INTENT_SALE)
             var intent=Intent(this,PaymentActivity::class.java)
             intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION,config)
             intent.putExtra(PaymentActivity.EXTRA_PAYMENT,payment)
-            startActivityForResult(intent,123)
-
+            startActivityForResult(intent,123)*/
+            var int=Intent(this,TicketAct::class.java)
+            int.putExtra("bnb2",bnb2)
+            startActivity(int)
+        }
+        ccp_butt.setOnClickListener {
+            val int=Intent(this,CCPAct::class.java)
+            int.putExtra("bnb2",bnb2)
+            startActivity(int)
+        }
+        cib_butt.setOnClickListener {
+            val int=Intent(this,CIBAct::class.java)
+            int.putExtra("bnb2",bnb2)
+            startActivity(int)
         }
     }
 
