@@ -142,25 +142,13 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:fontFamily="@font/nunito_semibold"
-                android:gravity="end"
                 android:text="@string/price_dzd_placeholder"
                 android:textColor="#141C50"
                 android:textSize="24sp" />
-            <TextView
-                android:id="@+id/textView5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="20dp"
-                android:gravity="end"
-                android:layout_weight="1"
-                android:text="@string/dzd"
-                android:textSize="24sp"
-                android:fontFamily="@font/nunito_semibold"
-                android:textColor="#141C50"
-                android:layout_gravity="center" />
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/euro_layout"
             android:layout_width="match_parent"
             android:layout_height="70dp"
             android:orientation="horizontal">
@@ -180,21 +168,8 @@
                 android:id="@+id/total_eur2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="end"
                 android:layout_weight="1"
                 android:text="@string/total_eur_placeholder"
-                android:textColor="#141C50"
-                android:textSize="24sp"
-                android:fontFamily="@font/nunito_semibold"
-                android:layout_gravity="center" />
-            <TextView
-                android:id="@+id/textView11"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="20dp"
-                android:gravity="end"
-                android:layout_weight="1"
-                android:text="@string/eur_currency_sign"
                 android:textColor="#141C50"
                 android:textSize="24sp"
                 android:fontFamily="@font/nunito_semibold"
@@ -222,7 +197,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:layout_weight="2"
-                android:text="@string/paypal"
+                android:text="@string/paymethodplaceholder"
                 android:textColor="#141C50"
                 android:textSize="24sp"
                 android:fontFamily="@font/nunito_semibold"

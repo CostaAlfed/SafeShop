@@ -31,11 +31,13 @@ class TotalAct : AppCompatActivity() {
     var config:PayPalConfiguration?=null
     var amount:Double=0.0
     var last_id:String=""
+    var bnb2:String=""
+    var meth:String=""
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_total)
-
-        val bnb2=intent.getStringExtra("bnb")
+        bnb2=intent.getStringExtra("bnb")
         var total:Int=0
         var ipad:String=getString(R.string.local_ip)
         var url="http://"+ipad+"/SalesWeb/get_total.php?bill_no="+ bnb2
@@ -106,33 +108,38 @@ class TotalAct : AppCompatActivity() {
         startService(i)
 
         paypal_butt.setOnClickListener {
-            /*amount=total_eur.text.toString().toDouble()
+            amount=total_eur.text.toString().toDouble()
             var payment=PayPalPayment(BigDecimal.valueOf(amount),"EUR","DzBookStore", PayPalPayment.PAYMENT_INTENT_SALE)
             var intent=Intent(this,PaymentActivity::class.java)
             intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION,config)
             intent.putExtra(PaymentActivity.EXTRA_PAYMENT,payment)
-            startActivityForResult(intent,123)*/
-            var int=Intent(this,TicketAct::class.java)
+            startActivityForResult(intent,123)
+            /*var int=Intent(this,TicketAct::class.java)
             int.putExtra("bnb2",bnb2)
-            startActivity(int)
+            startActivity(int)*/
         }
         ccp_butt.setOnClickListener {
             val int=Intent(this,CCPAct::class.java)
             int.putExtra("bnb2",bnb2)
+            int.putExtra("meth","CCP")
             startActivity(int)
         }
         cib_butt.setOnClickListener {
             val int=Intent(this,CIBAct::class.java)
             int.putExtra("bnb2",bnb2)
+            int.putExtra("meth","CiB")
             startActivity(int)
         }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        bnb2=intent.getStringExtra("bnb")
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode==123){
             if (resultCode==Activity.RESULT_OK){
-                var obj=Intent(this,confirmAct::class.java)
+                var obj=Intent(this,TicketAct::class.java)
+                obj.putExtra("bnb2",bnb2)
+                obj.putExtra("meth","Paypal")
                 startActivity(obj)
             }
         }

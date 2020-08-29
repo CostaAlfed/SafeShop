@@ -11,6 +11,7 @@ import android.os.Environment
 import android.provider.MediaStore
 import android.view.View
 import android.widget.Toast
+import androidx.core.view.isGone
 import com.android.volley.Request
 import com.android.volley.RequestQueue
 import com.android.volley.Response
@@ -45,14 +46,16 @@ class TicketAct : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_ticket)
 
+        val rec_meth=intent.getStringExtra("meth")
         val bnb3=intent.getStringExtra("bnb2")
         var total:Int=0
         val ipad:String=getString(R.string.local_ip)
-        val url="http://"+ipad+"/SalesWeb/get_total.php?bill_no="+ bnb3
+
+        val url="http://"+ipad+"/SalesWeb/get_total.php?bill_no="+bnb3
         val rq: RequestQueue = Volley.newRequestQueue(this)
         val sr= StringRequest(Request.Method.GET,url, Response.Listener { response ->
             total=response.toInt()
-            total_tv2.text=response
+            total_tv2.text=response+" DZD"
         }, Response.ErrorListener { error ->
             Toast.makeText(this,error.message, Toast.LENGTH_LONG).show()
         })
@@ -89,7 +92,7 @@ class TicketAct : AppCompatActivity() {
                 val df = DecimalFormat("0.00")
                 val total_in_eur1=total*exchange_rate
                 val total_in_eur2=df.format(total_in_eur1)
-                total_eur2.text=total_in_eur2.toString()
+                total_eur2.text=total_in_eur2.toString()+" £"
             }, Response.ErrorListener { error ->
                 Toast.makeText(this,error.message, Toast.LENGTH_LONG).show()
             })
@@ -110,6 +113,13 @@ class TicketAct : AppCompatActivity() {
 
         trans_code.text=getTransactionCode(12)
 
+        if (rec_meth=="Paypal") pay_method.text="Paypal"
+        else {
+            euro_layout.visibility = View.GONE
+            if (rec_meth=="CCP") pay_method.text="CCP"
+            else if (rec_meth=="CiB") pay_method.text="CiB"
+        }
+
         ticket_butt_done.setOnClickListener {
             var int= Intent(this,confirmAct::class.java)
             startActivity(int)
@@ -119,8 +129,6 @@ class TicketAct : AppCompatActivity() {
             "Ticket Saved in: "+saveImage(generateBimap(ticketView)),Toast.LENGTH_LONG).show()}
 
     }
-
-
 
     private fun generateBimap(view: View): Bitmap {
         // Create a bitmap with same dimensions as view
