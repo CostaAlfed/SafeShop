@@ -79,7 +79,7 @@ class BlurbFragment : DialogFragment() {
             Toast.makeText(activity,"QR Code Saved on your device storage!",Toast.LENGTH_LONG).show()
         }
 
-        butt.setOnClickListener {getActivity()?.onBackPressed()}
+        butt.setOnClickListener { activity?.finish()}
 
         qrtip.setOnClickListener { Toast.makeText(activity,
             "   Click on the QR Code \n to save it on your device.",Toast.LENGTH_LONG).show() }

@@ -166,12 +166,14 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
                 <EditText
+                    android:id="@+id/num_carte"
                     android:layout_width="175dp"
                     android:layout_height="40dp"
                     android:layout_marginStart="10dp"
                     android:layout_marginBottom="10dp"
                     android:textSize="16sp"
                     android:textColor="@color/ccp_blue"
+                    android:maxLength="19"
                     android:hint="0000-0000-0000-0000"/>
                 <LinearLayout
                     android:layout_width="170dp"
@@ -184,6 +186,7 @@
                         android:layout_height="40dp"
                         android:layout_marginStart="10dp"
                         android:layout_marginBottom="10dp"
+                        android:background="@color/ccp_yellow"
                         android:entries="@array/months" />
                     <Spinner
                         android:id="@+id/spinnerday"
@@ -191,22 +194,28 @@
                         android:layout_height="40dp"
                         android:layout_marginStart="10dp"
                         android:layout_marginBottom="10dp"
+                        android:background="@color/ccp_yellow"
                         android:entries="@array/days"/>
                 </LinearLayout>
                 <EditText
+                    android:id="@+id/ccp_name"
                     android:layout_width="175dp"
                     android:layout_height="40dp"
                     android:layout_marginStart="10dp"
                     android:layout_marginBottom="10dp"
                     android:hint="XXXXX XXXXXXXX"
+                    android:inputType="text"
                     android:textSize="18sp"
                     android:textColor="@color/ccp_blue"/>
                 <EditText
+                    android:id="@+id/ccp_cvv2"
                     android:layout_width="175dp"
                     android:layout_height="40dp"
                     android:layout_marginStart="10dp"
                     android:layout_marginBottom="10dp"
                     android:hint="xxxx"
+                    android:inputType="number"
+                    android:maxLength="4"
                     android:textSize="18sp"
                     android:textColor="@color/ccp_blue"/>
             </LinearLayout>

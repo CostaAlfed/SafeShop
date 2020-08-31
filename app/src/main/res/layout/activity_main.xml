@@ -13,7 +13,7 @@
         android:id="@+id/textInputLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="75dp"
         android:textColorHint="@color/butt_text"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -31,7 +31,7 @@
             android:ems="10"
             android:hint="@string/enter_mobile_number"
             android:inputType="phone"
-            android:text="0791192226"
+            android:maxLength="10"
             android:textColor="@color/butt_text"
             android:textColorHint="@color/butt_text" />
 
@@ -61,7 +61,6 @@
             android:ems="10"
             android:hint="@string/enter_password"
             android:inputType="textPassword"
-            android:text="911911"
             android:textColor="@color/butt_text"
             android:textColorHint="@color/butt_text" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -145,9 +144,17 @@
             android:id="@+id/email_butt"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_marginStart="33dp"
+            android:layout_marginStart="12dp"
             android:layout_marginTop="4dp"
             app:srcCompat="@drawable/email" />
+
+        <ImageView
+            android:id="@+id/github_butt"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="9dp"
+            android:layout_marginTop="4dp"
+            app:srcCompat="@drawable/github" />
 
         <ImageView
             android:id="@+id/twitter_butt"

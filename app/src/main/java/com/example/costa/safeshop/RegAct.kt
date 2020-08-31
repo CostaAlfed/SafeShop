@@ -13,6 +13,7 @@ import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import kotlinx.android.synthetic.main.activity_reg.*
 import android.os.AsyncTask
+import android.os.Handler
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
@@ -77,7 +78,6 @@ class RegAct : AppCompatActivity() {
         fun authenticate(attemptedPassword: String, encryptedPassword: ByteArray, salt: ByteArray): Boolean {
             // Encrypt the clear-text password using the same salt that was used to encrypt the original password
             val encryptedAttemptedPassword = getEncryptedPassword(attemptedPassword, salt)
-            System.out.println(" --encryptedAttemptedPassword: Attempted PASS HASHED by AUTH= " + Base64.getEncoder().encodeToString(encryptedAttemptedPassword))
 
             // Authentication succeeds if encrypted password that the user entered is equal to the stored hash
             return Arrays.equals(encryptedPassword, encryptedAttemptedPassword)
@@ -90,24 +90,19 @@ class RegAct : AppCompatActivity() {
         getSupportActionBar()?.setDisplayHomeAsUpEnabled(true)// make the application icon clickable to add back button
 
         reg_butt.setOnClickListener {
-            CheckSafetynetreCAPTCHA()
             var saltbae = generateSalt()
-            System.out.println("--saltbae= " + Base64.getEncoder().encodeToString(saltbae))
 
-            var saltbaestr = Base64.getEncoder().encodeToString(saltbae)
-            System.out.println("--saltbaestr= " + saltbaestr)
+            var saltbaestr = Base64.getUrlEncoder().encodeToString(saltbae)
 
             var encpass = getEncryptedPassword(reg_password.text.toString(), saltbae)
-            System.out.println("--encpass= " + Base64.getEncoder().encodeToString(encpass))
 
-            var encpassstr = Base64.getEncoder().encodeToString(encpass)
-            System.out.println("--encpassstr= " + encpassstr)
+            var encpassstr = Base64.getUrlEncoder().encodeToString(encpass)
 
             fun isValidPassword(password:String):Boolean {
                 var pattern: Pattern
                 var matcher: Matcher
 
-                var PASSWORD_PATTERN:String = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{4,}$"
+                var PASSWORD_PATTERN:String = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\\S+$).{4,}$"
 
                 pattern = Pattern.compile(PASSWORD_PATTERN)
                 matcher = pattern.matcher(password)
@@ -135,7 +130,6 @@ class RegAct : AppCompatActivity() {
                                 "at least one digit (0-9), \n" +
                                 "at least one UPPER case letter (A-Z), \n" +
                                 "at least one lower case letter (a-z), \n" +
-                                "at least one special character( [@#%^&+=] ), \n" +
                                 "NO White Spaces, \n", Toast.LENGTH_LONG).show()
                     else {
                         if (reg_password.text.toString().equals(password_confirm.text.toString())) {
@@ -151,21 +145,23 @@ class RegAct : AppCompatActivity() {
                                     if (response.equals("0")) {
                                         Toast.makeText(this,
                                             "Number already used!", Toast.LENGTH_LONG).show()
-                                        System.out.println("--response= 0")
-                                    } //DELETEDELETEDELETEDELETEDELETEDELETEDELETEDELETEDELETEDELETEDELETEDELETEDELETE
+                                    }
                                     else {
-                                        System.out.println("--response= 1") //DELETEDELETEDELETEDELETEDELETEDELETEDELETEDELETEDELETEDELETEDELETEDELETEDELETEDELETE
+                                        val handler = Handler()
+                                        CheckSafetynetreCAPTCHA()
+                                        handler.postDelayed({
                                         UserInfo.mobile = reg_number.text.toString()
                                         val i = Intent(this, MainActivity::class.java)
+                                        Toast.makeText(this,
+                                            "New User Registered Successfully! You Can Now Log In.", Toast.LENGTH_LONG).show()
                                         startActivity(i)
+                                        },5000)
                                     }
                                 }, Response.ErrorListener { error ->
                                     Toast.makeText(this, error.message, Toast.LENGTH_LONG).show()
-                                    System.out.println("--errormessage= " + error.message)
                                 })
                             rq.add(sr)
                         } else {
-                            System.out.println("Passwords don't match!")
                             Toast.makeText(this, "Passwords don't match!", Toast.LENGTH_LONG).show()
                         }
                     }
@@ -179,9 +175,7 @@ class RegAct : AppCompatActivity() {
         SafetyNet.getClient(this).verifyWithRecaptcha(recaptchaSiteKey)
             .addOnSuccessListener(this) { response ->
                 Log.d(TAG, "onSuccess")
-
                 if (!response.tokenResult.isEmpty()) {
-
                     // Received reCaptcha token and This token still needs to be validated on
                     // the server using the SECRET key api.
                     verifyTokenFromServer(response.tokenResult).execute()

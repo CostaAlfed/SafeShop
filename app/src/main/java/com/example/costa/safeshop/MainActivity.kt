@@ -39,78 +39,65 @@ public class MainActivity : AppCompatActivity() {
             val ipad: String = getString(R.string.local_ip)
             var saltstr: String =""
             var pwhashstr: String = ""
+            var uname = ""
 
             fun get_salt(){
                 val url3 ="http://" + ipad + "/SalesWeb/get_salt.php?number=" + login_number.text.toString()
                 val rq3: RequestQueue = Volley.newRequestQueue(this)
-                val sr3 = JsonArrayRequest(Request.Method.GET, url3,null, Response.Listener { response ->
-                    saltstr = response.getJSONObject(0).getString("salt")
+                val sr3 = StringRequest(Request.Method.GET, url3, Response.Listener { response ->
+                    saltstr = response
                 }, Response.ErrorListener { error ->
-                    Toast.makeText(this, error.message, Toast.LENGTH_LONG).show()
-                })
-                rq3.add(sr3)
-                System.out.println(" --saltstr: SALT from db outside volley = " + saltstr)
-            }
+                    Toast.makeText(this, error.message, Toast.LENGTH_LONG).show() })
+                rq3.add(sr3) }
 
             fun get_hash(){
-            val urlh ="http://" + ipad + "/SalesWeb/get_pwhash.php?number=" + login_number.text.toString()
-            val rqh: RequestQueue = Volley.newRequestQueue(this)
-            val srh = JsonArrayRequest(Request.Method.GET, urlh,null, Response.Listener { response ->
-                pwhashstr = response.getJSONObject(0).getString("pwhash")
-            }, Response.ErrorListener { error ->
-                Toast.makeText(this, error.message, Toast.LENGTH_LONG).show()
-            })
-            rqh.add(srh)
-            System.out.println(" --pwhashstr: HASH from db outside volley= " + pwhashstr)
-        }
+                val urlh ="http://" + ipad + "/SalesWeb/get_pwhash.php?number=" + login_number.text.toString()
+                val rqh: RequestQueue = Volley.newRequestQueue(this)
+                val srh = StringRequest(Request.Method.GET, urlh, Response.Listener { response ->
+                    pwhashstr = response
+                }, Response.ErrorListener { error ->
+                    Toast.makeText(this, error.message, Toast.LENGTH_LONG).show() })
+                rqh.add(srh) }
 
             signin_butt.setOnClickListener {
                 if (login_number.text.toString().isBlank()
-                    || login_password.text.toString().isBlank()
-                )
+                    || login_password.text.toString().isBlank())
                     Toast.makeText(this,
-                        "Please enter both \n the number and password", Toast.LENGTH_LONG).show()
+                        "      Please enter both \nthe number and password", Toast.LENGTH_LONG).show()
                 else{
-                get_salt()
-                get_hash()
-                var handler = Handler()
-                Toast.makeText(this, "Authenticating. Please Wait...", Toast.LENGTH_LONG).show()
-                handler.postDelayed({
-                    //converting pwhashstr and saltstr back to BYTE ARRAY
-                    val pwhash = Base64.getDecoder().decode(pwhashstr)
-                    System.out.println(
-                        " --salt: SALT from db IN BYTES right before AUTH new= "
-                                + Base64.getEncoder().encodeToString(pwhash)
-                    )
-                    val salt = Base64.getDecoder().decode(saltstr)
-                    System.out.println(
-                        " --salt: SALT from db IN BYTES right before AUTH new= "
-                                + Base64.getEncoder().encodeToString(salt)
-                    )
+                    get_salt()
+                    get_hash()
+                    val handler = Handler()
+                    Toast.makeText(this, "Authenticating. Please Wait...", Toast.LENGTH_LONG)
+                            .show()
+                    handler.postDelayed({
+                        if (saltstr == "0" || pwhashstr == "0")
+                            Toast.makeText(this, "Number doesn't exist!", Toast.LENGTH_LONG).show()
+                        else {
+                            //converting pwhashstr and saltstr back to BYTE ARRAY
+                            val pwhash = Base64.getUrlDecoder().decode(pwhashstr)
+                            val salt = Base64.getUrlDecoder().decode(saltstr)
+                            if (RegAct.authenticate(login_password.text.toString(), pwhash, salt)
+                                        .equals(false))
+                                Toast.makeText(this, "Sign In Failed", Toast.LENGTH_LONG).show()
+                            else {
+                                UserInfo.mobile = login_number.text.toString()
+                                val i0 = Intent(this, HomeAct::class.java)
 
-                    if (RegAct.authenticate(login_password.text.toString(), pwhash, salt).equals(
-                            false
-                        )
-                    ) {
-                        System.out.println(" --authenticate= false")
-                        Toast.makeText(this, "Sign In Failed", Toast.LENGTH_LONG).show()
-                    } else {
-                        System.out.println(" --authenticate= true")
-                        UserInfo.mobile = login_number.text.toString()
-                        val i0 = Intent(this, HomeAct::class.java)
-                        var uname =
-                            ""//DELETE THISSSSSS DELETE THISSSSSS DELETE THISSSSSSS DELETE THISSSSSS
-                        if (login_number.text.toString().equals("0791192226")) uname = ", Costa"
-                        if (login_number.text.toString().equals("0790526861")) uname = ", Smecta"
-
-                        Toast.makeText(
-                            this,
-                            "Authentication succesful, \n Welcome" + uname + "!",
-                            Toast.LENGTH_LONG
-                        ).show()
-                        startActivity(i0)
-                    }
-                }, 5000)
+                                val url1 =
+                                    "http://" + ipad + "/SalesWeb/get_user_name.php?number=" + UserInfo.mobile
+                                val rq1: RequestQueue = Volley.newRequestQueue(this)
+                                val sr1 = JsonArrayRequest(Request.Method.GET,url1,null,Response.Listener { response ->
+                                    uname = response.getJSONObject(0).getString("name")
+                                    Toast.makeText(this,
+                                        "Authentication successful,\n Welcome, " + uname + "!",Toast.LENGTH_SHORT).show()},
+                                    Response.ErrorListener { error ->
+                                        Toast.makeText(this, error.message, Toast.LENGTH_LONG).show()})
+                                rq1.add(sr1)
+                                startActivity(i0)
+                            }
+                        }
+                    }, 5000)
                 }
             }
 
@@ -121,6 +108,11 @@ public class MainActivity : AppCompatActivity() {
             contact_us_butt.setOnClickListener {
                 if (contact_layout.isVisible) contact_layout.visibility = View.INVISIBLE
                 else contact_layout.visibility = View.VISIBLE }
+
+            github_butt.setOnClickListener {
+                val openURL = Intent(android.content.Intent.ACTION_VIEW)
+                openURL.data = Uri.parse("https://github.com/CostaAlfed/SafeShop")
+                startActivity(openURL) }
 
             twitter_butt.setOnClickListener {
                 val openURL = Intent(android.content.Intent.ACTION_VIEW)

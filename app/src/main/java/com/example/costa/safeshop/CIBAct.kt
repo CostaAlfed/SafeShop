@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.core.widget.doAfterTextChanged
 import com.android.volley.Request
 import com.android.volley.RequestQueue
 import com.android.volley.Response
@@ -39,6 +40,20 @@ class CIBAct : AppCompatActivity() {
             int.putExtra("bnb2",bnb3)
             int.putExtra("meth",meth)
             startActivity(int)
+        }
+        cib_annuler.setOnClickListener { this.finish()}
+        cib_reinit.setOnClickListener {
+            num_carte_cib.text=null
+            cib_name.text=null
+            cib_cvv2.text=null
+            postal_code.text=null
+            spinnerdaycib.setSelection(0)
+            spinnermonthcib.setSelection(0)
+        }
+        num_carte_cib.doAfterTextChanged {
+            if (num_carte_cib.text.length == 4 ||
+                num_carte_cib.text.length == 9 ||
+                num_carte_cib.text.length ==14)     num_carte_cib.text.append('-')
         }
     }
 }

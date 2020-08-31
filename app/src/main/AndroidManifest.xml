@@ -13,8 +13,10 @@
         android:roundIcon="@drawable/app_icon_v2_192x192"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        android:usesCleartextTraffic="true">
-        <activity android:name=".CCPAct"></activity>
+        android:usesCleartextTraffic="true"
+        android:allowAudioPlaybackCapture="true">
+        <activity android:name=".LastActivity"></activity>
+        <activity android:name=".CCPAct" />
         <activity android:name=".CIBAct" />
         <activity android:name=".TicketAct" />
         <activity android:name=".confirmAct" />

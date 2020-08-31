@@ -1,6 +1,6 @@
 package com.example.costa.safeshop
 
-import android.content.Context
+
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Canvas
@@ -8,20 +8,15 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Environment
-import android.provider.MediaStore
 import android.view.View
 import android.widget.Toast
-import androidx.core.view.isGone
 import com.android.volley.Request
 import com.android.volley.RequestQueue
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonArrayRequest
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_ticket.*
-import kotlinx.android.synthetic.main.activity_total.*
-import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
 import java.text.DecimalFormat
@@ -34,10 +29,10 @@ class TicketAct : AppCompatActivity() {
 
     companion object {private val ALLOWED_CHARACTERS = "0123456789AZERTYUIOPQSDFGHJKLMWXCVBN"}
 
-    private fun getTransactionCode(sizeOfRandomString: Int): String {
+    private fun getTransactionCode(): String {
         val random = Random()
-        val sb = StringBuilder(sizeOfRandomString)
-        for (i in 0 until sizeOfRandomString)
+        val sb = StringBuilder(12)
+        for (i in 0 until 12)
             sb.append(ALLOWED_CHARACTERS[random.nextInt(ALLOWED_CHARACTERS.length)])
         return sb.toString()
     }
@@ -111,7 +106,7 @@ class TicketAct : AppCompatActivity() {
         })
         rq6.add(sr6)
 
-        trans_code.text=getTransactionCode(12)
+        trans_code.text=getTransactionCode()
 
         if (rec_meth=="Paypal") pay_method.text="Paypal"
         else {

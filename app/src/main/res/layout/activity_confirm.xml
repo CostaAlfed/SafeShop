@@ -1,23 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:background="@drawable/royal_blue_bg"
     tools:context=".confirmAct">
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/thanks"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="76dp"
-        android:layout_marginTop="124dp"
+        android:layout_marginTop="80dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginEnd="25dp"
         android:gravity="center"
-        android:text="Thank You For Using Our Service! \n \n Your order will be delivered within:\n 1-2 weeks"
-        android:textColor="@color/text_1"
-        android:textSize="22sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:text="@string/thanks_placeholder"
+        android:fontFamily="@font/nunito_bold"
+        android:textColor="@color/ccp_yellow"
+        android:textSize="32sp"/>
+    <TextView
+        android:id="@+id/orderwait"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="33dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginEnd="25dp"
+        android:gravity="center"
+        android:text="@string/one_two_weeks"
+        android:fontFamily="@font/nunito_semibold_italic"
+        android:textColor="@color/cib_yellow"
+        android:textSize="26sp"/>
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="75dp"
+        android:text="@string/rate_us"
+        android:fontFamily="@font/nunito_semibold_italic"
+        android:textColor="@color/butt_text"
+        android:textSize="30sp"
+        android:textStyle="bold|italic" />
+    <RatingBar
+        android:id="@+id/ratingBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:elevation="10dp"
+        android:numStars="5"
+        android:rating="4"/>
+    <Button
+        android:id="@+id/submit_rating_butt"
+        android:layout_width="150dp"
+        android:layout_height="66dp"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/gradient_butt"
+        android:elevation="10dp"
+        android:text="@string/submit"
+        android:textSize="20sp"
+        android:textColor="@color/butt_text"
+        android:textStyle="bold|italic" />
 
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

@@ -19,7 +19,8 @@ android {
         repositories {
             mavenCentral()
             maven { url "https://storage.googleapis.com/r8-releases/raw" }
-
+            jcenter()
+            google()
         }
         dependencies {
             classpath "com.android.tools:r8:1.6.84"

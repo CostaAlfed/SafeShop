@@ -23,7 +23,7 @@ class BooksAct : AppCompatActivity() {
         getSupportActionBar()?.setDisplayHomeAsUpEnabled(true)// make the application icon clickable to add back button
 
         Toast.makeText(this,
-            "   Click on the cover image \nfor more details about the book!",Toast.LENGTH_LONG)
+            "   Click on the cover image \nfor more details about the book!",Toast.LENGTH_SHORT)
             .show()
 
         var cat:String=intent.getStringExtra("cat")

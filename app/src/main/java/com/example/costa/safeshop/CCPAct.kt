@@ -3,10 +3,12 @@ package com.example.costa.safeshop
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Editable
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.core.widget.doAfterTextChanged
 import com.android.volley.Request
 import com.android.volley.RequestQueue
 import com.android.volley.Response
@@ -54,5 +56,20 @@ class CCPAct : AppCompatActivity() {
             int.putExtra("meth",meth)
             startActivity(int)
         }
+        ccp_annuler.setOnClickListener { this.finish()}
+        ccp_reinit.setOnClickListener {
+            num_carte.text=null
+            ccp_name.text=null
+            ccp_cvv2.text=null
+            spinnerday.setSelection(0)
+            spinnermonth.setSelection(0)
+        }
+
+        num_carte.doAfterTextChanged {
+            if (num_carte.text.length == 4 ||
+                num_carte.text.length == 9 ||
+                num_carte.text.length ==14)     num_carte.text.append('-')
+        }
+
     }
 }

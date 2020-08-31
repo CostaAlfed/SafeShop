@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:background="@drawable/royal_blue_bg"
+    tools:context=".LastActivity">
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/logo_w_slogan"/>
+    <Button
+        android:id="@+id/logout_butt"
+        android:layout_width="275dp"
+        android:layout_height="75dp"
+        android:layout_marginTop="33dp"
+        android:background="@drawable/gradient_butt"
+        android:elevation="10dp"
+        android:text="@string/log_out"
+        android:textSize="24sp"
+        android:textColor="@color/butt_text"
+        android:textStyle="bold|italic"/>
+    <Button
+        android:id="@+id/close_app_butt"
+        android:layout_width="275dp"
+        android:layout_height="75dp"
+        android:layout_marginTop="33dp"
+        android:background="@drawable/gradient_butt"
+        android:elevation="10dp"
+        android:text="@string/close_app"
+        android:textSize="24sp"
+        android:textColor="@color/butt_text"
+        android:textStyle="bold|italic" />
+
+</LinearLayout>

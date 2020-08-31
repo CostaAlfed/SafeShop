@@ -188,19 +188,24 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
                 <EditText
+                    android:id="@+id/num_carte_cib"
                     android:layout_width="175dp"
                     android:layout_height="40dp"
                     android:layout_marginStart="10dp"
                     android:layout_marginBottom="10dp"
                     android:textSize="16sp"
                     android:textColor="@color/cib_blue"
+                    android:maxLength="19"
                     android:hint="0000-0000-0000-0000"/>
                 <EditText
+                    android:id="@+id/cib_cvv2"
                     android:layout_width="66dp"
                     android:layout_height="40dp"
                     android:layout_marginStart="10dp"
                     android:layout_marginBottom="10dp"
                     android:hint="xxxx"
+                    android:inputType="number"
+                    android:maxLength="4"
                     android:textSize="20sp"
                     android:textColor="@color/cib_blue"/>
                 <LinearLayout
@@ -214,6 +219,7 @@
                         android:layout_height="40dp"
                         android:layout_marginStart="10dp"
                         android:layout_marginBottom="10dp"
+                        android:background="@color/cib_yellow"
                         android:entries="@array/months"/>
                     <Spinner
                         android:id="@+id/spinnerdaycib"
@@ -221,22 +227,28 @@
                         android:layout_height="40dp"
                         android:layout_marginStart="10dp"
                         android:layout_marginBottom="10dp"
+                        android:background="@color/cib_yellow"
                         android:entries="@array/days"/>
                 </LinearLayout>
                 <EditText
+                    android:id="@+id/cib_name"
                     android:layout_width="170dp"
                     android:layout_height="40dp"
                     android:layout_marginStart="10dp"
                     android:layout_marginBottom="10dp"
                     android:hint="XXXXX XXXXXXX"
+                    android:inputType="text"
                     android:textSize="18sp"
                     android:textColor="@color/cib_blue"/>
                 <EditText
+                    android:id="@+id/postal_code"
                     android:layout_width="70dp"
                     android:layout_height="40dp"
                     android:layout_marginStart="10dp"
                     android:layout_marginBottom="10dp"
                     android:hint="xxxxx"
+                    android:maxLength="5"
+                    android:inputType="number"
                     android:textSize="18sp"
                     android:textColor="@color/cib_blue"/>
             </LinearLayout>
